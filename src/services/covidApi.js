@@ -36,9 +36,15 @@ export const covidApi = createApi({
         getCountriesStatisticalData: builder.query({
             // The URL for the request is '/'
             query: () => createRequest()
+        }),
+        getAllAsianCountriesData: builder.query({
+            query: () => createRequest('asia')
         })
     })
 });
 
 // Export the auto-generated hook for the `getCountriesStatisticalData` query endpoint
-export const { useGetCountriesStatisticalDataQuery } = covidApi;
+export const { 
+    useGetCountriesStatisticalDataQuery,
+    useGetAllAsianCountriesDataQuery
+} = covidApi;
