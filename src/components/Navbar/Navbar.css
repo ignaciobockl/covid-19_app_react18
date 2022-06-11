@@ -1,0 +1,7 @@
+nav {
+    background-color: blueviolet;
+}
+
+ul {
+    --bs-scroll-height: 100px;
+}

@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+.vertical__menu {
+  overflow-y: auto;
+  height: 800px;
+  width: 210px;
+}
+
+.vertical__menu a {
+  background-color: brown;
+  color: white;
+  display: block;
+  margin: 6px;
+  padding: 6px;
+  text-decoration: none;
+  cursor: pointer;
+}
