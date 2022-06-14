@@ -1,7 +1,13 @@
 nav {
-    background-color: blueviolet;
+    background-color: #222831;
 }
 
-ul {
-    --bs-scroll-height: 100px;
+.vaccovid__name {
+    font-size: 25px;
+    margin: 3px 60px;
+    color: #00ADB5;
+}
+
+.vaccovid__navbar {
+    color: #eeeeee;
 }
