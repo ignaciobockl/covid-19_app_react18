@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { useGetAllAsianCountriesDataQuery, useGetCountriesStatisticalDataQuery } from '../../services/covidApi';
 
@@ -6,18 +7,20 @@ import { useGetAllAsianCountriesDataQuery, useGetCountriesStatisticalDataQuery }
 
 export default function Table () {
 
+    const { value:continentName } = useSelector( state => state.continent );
+    console.log("🚀 ~ file: Table.jsx ~ line 11 ~ Table ~ continentName", continentName)
+
     let { data, isFetching: isFetchingWorld } = useGetCountriesStatisticalDataQuery();
     let { data: dataAsian, isFetching: isFetchingAsian } = useGetAllAsianCountriesDataQuery();
 
-    const [ continentName, setContinentName ] = useState(localStorage.getItem('continentName'));
-    // console.log("🚀 ~ file: Table.jsx ~ line 13 ~ Table ~ continentName", continentName)
+    // const [ continentName, setContinentName ] = useState(localStorage.getItem('continentName'));
     const [ countries, setCountries ] = useState(data);
     const [ isFetching, setIsFetching ] = useState(false);
 
-    useEffect(() => {
-        setCountries(data);
-        setIsFetching(isFetchingWorld);
-    }, [ data ]);
+    // useEffect(() => {
+    //     setCountries(data);
+    //     setIsFetching(isFetchingWorld);
+    // }, [ data ]);
 
     useEffect(() => {
         if ( continentName === 'Africa' ) {  }
@@ -30,30 +33,6 @@ export default function Table () {
             setIsFetching(isFetchingWorld);
         }
     }, [ continentName, countries ]);
-
-    useEffect(() => {
-        const continentString = localStorage.getItem('continentName');
-        if ( continentString ) {
-            const data = continentString;
-            setContinentName(data);
-        }
-
-        // function checkContinentData() {
-        //     const continentString = localStorage.getItem('continentName');
-        //     if ( continentString ) {
-        //         console.log("🚀 ~ file: Table.jsx ~ line 53 ~ checkContinentData ~ continentString", continentString)
-        //         setContinentName(continentString);
-        //     }
-        // }
-        // console.log('typeof', typeof(window))
-        // console.log('window', window);
-
-        // window.addEventListener('localStorage', checkContinentData);
-        // return () => {
-        //     window.removeEventListener('localStorage', checkContinentData);
-        // };
-    }, []);
-    
 
     return (
         <table className="table table-hover">

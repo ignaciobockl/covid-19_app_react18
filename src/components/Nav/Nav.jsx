@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { changeContinent } from '../../features/continent/continentSlice';
 
 import { useGetCountriesStatisticalDataQuery } from '../../services/covidApi';
 
@@ -7,13 +10,17 @@ import './Nav.css';
 
 
 const continents = [ 'Africa', 'Asian', 'Australia', 'Europe', 'North America', 'Oceania', 'South America' ];
-localStorage.setItem('continentName', 'World');
+// localStorage.setItem('continentName', 'World');
 
 export default function Nav () {
 
     let { data, isFetching: isFetchingWorld } = useGetCountriesStatisticalDataQuery();
 
-    const [ continentName, setContinentName ] = useState('World');
+    const dispatch = useDispatch();
+    const { value: continentValue } = useSelector(state => state.continent);
+    console.log("🚀 ~ file: Nav.jsx ~ line 18 ~ Nav ~ continentValue", continentValue)
+
+    const [ continentName, setContinentName ] = useState(continentValue);
     const [ countries, setCountries ] = useState(data);
     const [ isFetching, setIsFetching ] = useState(false);
 
@@ -29,7 +36,8 @@ export default function Nav () {
     }
 
     useEffect(() => {
-        localStorage.setItem('continentName', continentName);
+        // localStorage.setItem('continentName', continentName);
+        dispatch( changeContinent(continentName) );
     }, [ continentName ]);
     // ----------------------------------------------------------------------------------- //
 
