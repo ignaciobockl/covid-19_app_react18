@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useGetAllAsianCountriesDataQuery, useGetCountriesStatisticalDataQuery } from '../../services/covidApi';
+import { useGetAllAfricaCountriesDataQuery, useGetAllAsianCountriesDataQuery, useGetCountriesStatisticalDataQuery } from '../../services/covidApi';
 
 
 
 export default function Table () {
 
-    const { value:continentName } = useSelector( state => state.continent );
-    console.log("🚀 ~ file: Table.jsx ~ line 11 ~ Table ~ continentName", continentName)
+    const { value: continentName } = useSelector( state => state.continent );
 
     let { data, isFetching: isFetchingWorld } = useGetCountriesStatisticalDataQuery();
+    let { data: dataAfrica, isFetching: isFetchingAfrica } = useGetAllAfricaCountriesDataQuery();
     let { data: dataAsian, isFetching: isFetchingAsian } = useGetAllAsianCountriesDataQuery();
 
-    // const [ continentName, setContinentName ] = useState(localStorage.getItem('continentName'));
     const [ countries, setCountries ] = useState(data);
     const [ isFetching, setIsFetching ] = useState(false);
 
-    // useEffect(() => {
-    //     setCountries(data);
-    //     setIsFetching(isFetchingWorld);
-    // }, [ data ]);
-
     useEffect(() => {
-        if ( continentName === 'Africa' ) {  }
+        if ( continentName === 'Africa' ) { 
+            setCountries( dataAfrica );
+            setIsFetching( isFetchingAfrica );
+        }
         else if ( continentName === 'Asian' ) {
             setCountries(dataAsian);
             setIsFetching(isFetchingAsian);
@@ -32,7 +29,7 @@ export default function Table () {
             setCountries(data);
             setIsFetching(isFetchingWorld);
         }
-    }, [ continentName, countries ]);
+    }, [ continentName, countries, data ]);
 
     return (
         <table className="table table-hover">
