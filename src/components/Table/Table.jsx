@@ -1,20 +1,59 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useGetCountriesStatisticalDataQuery } from '../../services/covidApi';
-
-import './Table.css';
+import { useGetAllAsianCountriesDataQuery, useGetCountriesStatisticalDataQuery } from '../../services/covidApi';
 
 
 
 export default function Table () {
 
-    const { data: countries, isLoading, isFetching, isSuccess, isError, error } = useGetCountriesStatisticalDataQuery();
-    console.log('data', countries);
-    console.log('isLoading', isLoading);
-    console.log('isFetching', isFetching);
-    console.log('isSuccess', isSuccess);
-    console.log('isError', isError);
-    console.log('error', error);
+    let { data, isFetching: isFetchingWorld } = useGetCountriesStatisticalDataQuery();
+    let { data: dataAsian, isFetching: isFetchingAsian } = useGetAllAsianCountriesDataQuery();
+
+    const [ continentName, setContinentName ] = useState(localStorage.getItem('continentName'));
+    // console.log("🚀 ~ file: Table.jsx ~ line 13 ~ Table ~ continentName", continentName)
+    const [ countries, setCountries ] = useState(data);
+    const [ isFetching, setIsFetching ] = useState(false);
+
+    useEffect(() => {
+        setCountries(data);
+        setIsFetching(isFetchingWorld);
+    }, [ data ]);
+
+    useEffect(() => {
+        if ( continentName === 'Africa' ) {  }
+        else if ( continentName === 'Asian' ) {
+            setCountries(dataAsian);
+            setIsFetching(isFetchingAsian);
+        }
+        else {
+            setCountries(data);
+            setIsFetching(isFetchingWorld);
+        }
+    }, [ continentName, countries ]);
+
+    useEffect(() => {
+        const continentString = localStorage.getItem('continentName');
+        if ( continentString ) {
+            const data = continentString;
+            setContinentName(data);
+        }
+
+        // function checkContinentData() {
+        //     const continentString = localStorage.getItem('continentName');
+        //     if ( continentString ) {
+        //         console.log("🚀 ~ file: Table.jsx ~ line 53 ~ checkContinentData ~ continentString", continentString)
+        //         setContinentName(continentString);
+        //     }
+        // }
+        // console.log('typeof', typeof(window))
+        // console.log('window', window);
+
+        // window.addEventListener('localStorage', checkContinentData);
+        // return () => {
+        //     window.removeEventListener('localStorage', checkContinentData);
+        // };
+    }, []);
+    
 
     return (
         <table className="table table-hover">
@@ -61,23 +100,24 @@ export default function Table () {
                     :
                         <>
                             {
-                                countries.map((data) => (
-                                    <tr key={ data.id }>
-                                        <td>{ data.rank }</td>
-                                        <td>{ data.Country }</td>
-                                        <td>{ data.TotalCases }</td>
-                                        <td>{ data.NewCases }</td>
-                                        <td>{ data.Infection_Risk }</td>
-                                        <td>{ data.Serious_Critical }</td>
-                                        <td>{ data.ActiveCases }</td>
-                                        <td>{ data.TotalDeaths }</td>
-                                        <td>{ data.NewDeaths }</td>
-                                        <td>{ data.Case_Fatality_Rate }</td>
-                                        <td>{ data.TotalTests }</td>
-                                        <td>{ data.Test_Percentage }</td>
-                                        <td>{ data.TotalRecovered }</td>
-                                        <td>{ data.Recovery_Proporation }</td>
-                                        <td>{ data.Population }</td>
+                                countries !== undefined  &&
+                                countries.map((country) => (
+                                    <tr key={ country.id }>
+                                        <td>{ country.rank }</td>
+                                        <td>{ country.Country }</td>
+                                        <td>{ country.TotalCases }</td>
+                                        <td>{ country.NewCases }</td>
+                                        <td>{ country.Infection_Risk }</td>
+                                        <td>{ country.Serious_Critical }</td>
+                                        <td>{ country.ActiveCases }</td>
+                                        <td>{ country.TotalDeaths }</td>
+                                        <td>{ country.NewDeaths }</td>
+                                        <td>{ country.Case_Fatality_Rate }</td>
+                                        <td>{ country.TotalTests }</td>
+                                        <td>{ country.Test_Percentage }</td>
+                                        <td>{ country.TotalRecovered }</td>
+                                        <td>{ country.Recovery_Proporation }</td>
+                                        <td>{ country.Population }</td>
                                     </tr>
                                 ))
                             }

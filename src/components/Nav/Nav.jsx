@@ -25,7 +25,7 @@ export default function Nav () {
     // ------------------------------- Event Click -------------------------------------- //
     const handleContinentClick = (e) => {
         setContinentName(e);
-        console.log("🚀 ~ file: Nav.jsx ~ line 28 ~ handleContinentClick ~ e", e)
+        // console.log("🚀 ~ file: Nav.jsx ~ line 28 ~ handleContinentClick ~ e", e)
     }
 
     useEffect(() => {
