@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useGetAllAfricaCountriesDataQuery, useGetAllAsianCountriesDataQuery, useGetCountriesStatisticalDataQuery } from '../../services/covidApi';
+import { 
+    useGetAllAfricaCountriesDataQuery, 
+    useGetAllAsianCountriesDataQuery, 
+    useGetAllAustraliaAndOceaniaCountriesDataQuery, 
+    useGetCountriesStatisticalDataQuery 
+} from '../../services/covidApi';
 
 
 
@@ -12,6 +17,8 @@ export default function Table () {
     let { data, isFetching: isFetchingWorld } = useGetCountriesStatisticalDataQuery();
     let { data: dataAfrica, isFetching: isFetchingAfrica } = useGetAllAfricaCountriesDataQuery();
     let { data: dataAsian, isFetching: isFetchingAsian } = useGetAllAsianCountriesDataQuery();
+    let { data: dataAustraliaOceania, isFetching: isFetchingAustraliaOceania } = 
+        useGetAllAustraliaAndOceaniaCountriesDataQuery();
 
     const [ countries, setCountries ] = useState(data);
     const [ isFetching, setIsFetching ] = useState(false);
@@ -24,6 +31,10 @@ export default function Table () {
         else if ( continentName === 'Asian' ) {
             setCountries(dataAsian);
             setIsFetching(isFetchingAsian);
+        }
+        else if ( continentName === 'Australia and Oceania') {
+            setCountries( dataAustraliaOceania );
+            setIsFetching( isFetchingAustraliaOceania );
         }
         else {
             setCountries(data);

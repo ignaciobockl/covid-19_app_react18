@@ -9,7 +9,7 @@ import './Nav.css';
 
 
 
-const continents = [ 'Africa', 'Asian', 'Australia', 'Europe', 'North America', 'Oceania', 'South America' ];
+const continents = [ 'Africa', 'Asian', 'Australia and Oceania', 'Europe', 'North America', 'Oceania', 'South America' ];
 
 export default function Nav () {
 
