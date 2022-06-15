@@ -10,7 +10,6 @@ import './Nav.css';
 
 
 const continents = [ 'Africa', 'Asian', 'Australia', 'Europe', 'North America', 'Oceania', 'South America' ];
-// localStorage.setItem('continentName', 'World');
 
 export default function Nav () {
 
@@ -18,7 +17,6 @@ export default function Nav () {
 
     const dispatch = useDispatch();
     const { value: continentValue } = useSelector(state => state.continent);
-    console.log("🚀 ~ file: Nav.jsx ~ line 18 ~ Nav ~ continentValue", continentValue)
 
     const [ continentName, setContinentName ] = useState(continentValue);
     const [ countries, setCountries ] = useState(data);
@@ -32,11 +30,9 @@ export default function Nav () {
     // ------------------------------- Event Click -------------------------------------- //
     const handleContinentClick = (e) => {
         setContinentName(e);
-        // console.log("🚀 ~ file: Nav.jsx ~ line 28 ~ handleContinentClick ~ e", e)
     }
 
     useEffect(() => {
-        // localStorage.setItem('continentName', continentName);
         dispatch( changeContinent(continentName) );
     }, [ continentName ]);
     // ----------------------------------------------------------------------------------- //
@@ -82,8 +78,6 @@ export default function Nav () {
                                 // href={`/${cont.toLowerCase()}-data`}
                                 key={ index }
                                 onClick={ () => handleContinentClick(cont) }
-                                // POSIBLE SOLUCION
-                                // https://midu.dev/react-hooks-use-effect-funcionalidad-en-el-ciclo-vida-componentes/
                             >
                                 { cont }
                             </a>
