@@ -52,6 +52,9 @@ export const covidApi = createApi({
         getAllNorthernAmericanData: builder.query({
             query: () => createRequest('northamerica')
         }),
+        getAllSouthernAmericanData: builder.query({
+            query: () => createRequest('southamerica')
+        })
     })
 });
 
@@ -63,4 +66,5 @@ export const {
     useGetAllAustraliaAndOceaniaCountriesDataQuery,
     useGetAllEuropeCountriesDataQuery,
     useGetAllNorthernAmericanDataQuery,
+    useGetAllSouthernAmericanDataQuery,
 } = covidApi;
