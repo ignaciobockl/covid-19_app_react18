@@ -6,6 +6,7 @@ import {
     useGetAllAsianCountriesDataQuery, 
     useGetAllAustraliaAndOceaniaCountriesDataQuery, 
     useGetAllEuropeCountriesDataQuery, 
+    useGetAllNorthernAmericanDataQuery, 
     useGetCountriesStatisticalDataQuery 
 } from '../../services/covidApi';
 
@@ -20,7 +21,9 @@ export default function Table () {
     let { data: dataAsian, isFetching: isFetchingAsian } = useGetAllAsianCountriesDataQuery();
     let { data: dataAustraliaOceania, isFetching: isFetchingAustraliaOceania } = 
         useGetAllAustraliaAndOceaniaCountriesDataQuery();
-    let { data: dataEurope, isFetchingEurope } = useGetAllEuropeCountriesDataQuery();
+    let { data: dataEurope, isFetching: isFetchingEurope } = useGetAllEuropeCountriesDataQuery();
+    let { data: dataNorthAmerica, isFetching: isFetchingNorthAmerica } = 
+        useGetAllNorthernAmericanDataQuery(); 
 
     const [ countries, setCountries ] = useState(data);
     const [ isFetching, setIsFetching ] = useState(false);
@@ -41,6 +44,10 @@ export default function Table () {
         else if ( continentName === 'Europe') {
             setCountries( dataEurope );
             setIsFetching( isFetchingEurope );
+        }
+        else if ( continentName === 'North America') {
+            setCountries( dataNorthAmerica );
+            setIsFetching( isFetchingNorthAmerica );
         }
         else {
             setCountries(data);
